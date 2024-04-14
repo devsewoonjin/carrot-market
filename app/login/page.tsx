@@ -1,36 +1,37 @@
-import FormButton from "@/components/form-button";
-import FormInput from "@/components/form-input";
+"use client";
+import Input from "@/components/input";
 import SocialLogin from "@/components/social-login";
+import { useFormState } from "react-dom";
+import { login } from "./actions";
+import Button from "@/components/button";
+import { PASSWORD_MIN_LENGTH } from "@/lib/constants";
 
 export default function LogIn() {
-  const handleForm = async (formData: FormData) => {
-    "use server";
-    console.log(formData.get("email"), formData.get("password"));
-    console.log("i run in the server baby");
-  };
+  const [state, action] = useFormState(login, null);
   return (
     <div className="flex flex-col gap-10 py-8 px-6">
       <div className="flex flex-col gap-2 *:font-medium">
         <h1 className="text-2xl">안녕하세요</h1>
         <h2 className="text-xl">Log in with email and password.</h2>
       </div>
-      <form action={handleForm} className="flex flex-col gap-3">
-        <FormInput
+      <form action={action} className="flex flex-col gap-3">
+        <Input
           name="email"
-          type="text"
+          type="email"
           placeholder="Email"
           required
-          errors={[]}
+          errors={state?.fieldErrors.email}
         />
 
-        <FormInput
+        <Input
           name="password"
           type="password"
-          placeholder=" Password"
+          placeholder="Password"
           required
-          errors={[]}
+          minLength={PASSWORD_MIN_LENGTH}
+          errors={state?.fieldErrors.password}
         />
-        <FormButton className="h-10">Log in</FormButton>
+        <Button className="h-10">Log in</Button>
       </form>
       <SocialLogin />
     </div>

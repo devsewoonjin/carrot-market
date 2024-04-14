@@ -1,12 +1,14 @@
 import { ComponentPropsWithRef } from "react";
 
-interface FormInputProps extends ComponentPropsWithRef<"input"> {
+interface InputProps extends ComponentPropsWithRef<"input"> {
+  name: string;
   errors?: string[];
 }
-export default function FormInput({ errors = [], ...rest }: FormInputProps) {
+export default function Input({ name, errors = [], ...rest }: InputProps) {
   return (
     <div className="flex flex-col gap-2">
       <input
+        name={name}
         className="bg-transparent rounded-md w-full h-10 focus:outline ring-1 focus:ring-4 transition ring-neutral-200 focus:ring-orange-500 border-none placeholder:text-neutral-400"
         {...rest}
       />
